@@ -1,0 +1,23 @@
+CC=gcc
+CXX=g++47
+CXXFLAGS=-std=c++11 -Wall -pedantic
+
+word_puzzle_map.x: word_puzzle_map.h word_puzzle_map.o rotation.o
+	$(CXX) -I. -o $@ word_puzzle_map.o rotation.o
+
+word_puzzle_set.x: word_puzzle_set.h word_puzzle_set.o rotation.o
+	$(CXX) -I. -o $@ word_puzzle_set.o rotation.o
+
+.SUFFIXES: .x
+
+.PHONY : clean
+
+clean:
+	rm -f *.o *.x core.*
+
+%.x : %.c
+	$(CC) -o $@ $<
+%.x : %.cpp
+	$(CXX) $(CXXFLAGS) -o $@ $<
+%.o : %.cpp
+	$(CXX) $(CXXFLAGS) -I. -c -o $@ $<
